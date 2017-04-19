@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { PuzzlePiece } from './puzzle-piece';
 
 @Component({
@@ -10,11 +10,13 @@ export class NgSlidePuzzleComponent implements OnInit {
 
   constructor() { }
   
-  puzzleLevel:number;
+  @Input() imgUrl:string;
+  @Input() puzzleLevel:number;
   puzzlePieces:PuzzlePiece[] = [];
   
   ngOnInit() {
     //test
+    this.imgUrl = "download.jpg";
     this.puzzleLevel = 3;
     //test
     this.assignPieces();

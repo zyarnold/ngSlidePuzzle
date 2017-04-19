@@ -1,3 +1,10 @@
 <p>
   ng-slide-puzzle works!
+
 </p>
+  <div *ngFor="let piece of puzzlePieces; let i=index" style="display:inline" >
+    <img [src]="imgUrl" >
+    <div *ngIf="i%puzzleLevel==puzzleLevel-1" >
+      <br>
+    </div>
+  </div>
