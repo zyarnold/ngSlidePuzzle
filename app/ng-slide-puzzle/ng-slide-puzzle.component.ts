@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, ElementRef } from '@angular/core';
 import { PuzzlePiece } from './puzzle-piece';
 
 @Component({
@@ -8,15 +8,17 @@ import { PuzzlePiece } from './puzzle-piece';
 })
 export class NgSlidePuzzleComponent implements OnInit {
 
-  constructor() { }
+  constructor(public elem:ElementRef) { }
   
   @Input() imgUrl:string;
   @Input() puzzleLevel:number;
   puzzlePieces:PuzzlePiece[] = [];
-  
+  basicDimension:number;
+
   ngOnInit() {
     //test
-    this.imgUrl = "download.jpg";
+    this.basicDimension = 225;
+    this.imgUrl = "../download.jpg";
     this.puzzleLevel = 3;
     //test
     this.assignPieces();
@@ -38,7 +40,7 @@ export class NgSlidePuzzleComponent implements OnInit {
 
   public shufflePieces(){
     var pieceSetter:PuzzlePiece[] = JSON.parse(JSON.stringify(this.puzzlePieces));
-    console.log(pieceSetter);
+    //console.log(pieceSetter);
     for(var ctr=0; ctr<this.puzzlePieces.length; ctr++){
       var randomIndex = this.randomIntFromInterval(0,pieceSetter.length-1);
       var removedPiece = pieceSetter.splice(randomIndex,1)[0];

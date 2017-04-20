@@ -2,9 +2,19 @@
   ng-slide-puzzle works!
 
 </p>
-  <div *ngFor="let piece of puzzlePieces; let i=index" style="display:inline" >
-    <img [src]="imgUrl" >
-    <div *ngIf="i%puzzleLevel==puzzleLevel-1" >
-      <br>
-    </div>
+
+  <img id="puzzleImage" [src]="imgUrl" [style.display]="'none'" />
+  <div [style.display]="'block'" [style.width]="basicDimension+'px'" [style.height]="basicDimension+'px'" [style.background-color]="'black'" >
+    <button *ngFor="let piece of puzzlePieces;let i = index;"
+            [style.position]="'relative'"
+            [style.cursor]="'pointer'" 
+            [style.background-color]="'white'" 
+            [style.position.display]="'inline-block'"
+            [style.top] = "piece.correct_y*(basicDimension/puzzleLevel)+'px'"
+            [style.left] = "piece.correct_x*(basicDimension/puzzleLevel)+'px'"
+            [style.width]="basicDimension/puzzleLevel+'px'" 
+            [style.height]="basicDimension/puzzleLevel+'px'"  >
+      {{i}}
+    </button>
   </div>
+  <button (click)="shufflePieces()" >Shuffle</button>
