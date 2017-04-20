@@ -15,6 +15,7 @@ export class NgSlidePuzzleComponent implements OnInit {
 
   puzzlePieces:PuzzlePiece[] = [];
   basicDimension:number;
+  jsonCorrectPositions:string;
 
   ngOnInit() {
     //test
@@ -29,15 +30,18 @@ export class NgSlidePuzzleComponent implements OnInit {
   }
 
   private assignPieces(){
-    for(var x = 0; x<this.puzzleLevel; x++){
-      for(var y = 0; y<this.puzzleLevel; y++){
+    for(var y = 0; y<this.puzzleLevel; y++){
+      for(var x = 0; x<this.puzzleLevel; x++){
         var p = new PuzzlePiece();
         p.correct_x = x;
         p.correct_y = y;
+        p.current_x = x;
+        p.current_y = y;
         this.puzzlePieces.push(p);
       }
     }
     this.puzzlePieces[(this.puzzleLevel*this.puzzleLevel)-1].isBlankPiece = true;
+    this.jsonCorrectPositions = JSON.stringify(this.puzzlePieces);
   }
   switchWithBlank(clickedPiece:PuzzlePiece){
     var blankPiece:PuzzlePiece = this.puzzlePieces[this.puzzlePieces.length-1];
@@ -51,6 +55,12 @@ export class NgSlidePuzzleComponent implements OnInit {
       clickedPiece.current_x = blankX;
       clickedPiece.current_y = blankY;
     }
+    if(this.jsonCorrectPositions==JSON.stringify(this.puzzlePieces)){
+      console.log('timeout1');
+      window.setTimeout(function(){
+        alert('win');
+      },250);
+    }
   }
   getRelativePosition(index:number, _x:number, _y:number){
     var x = _x*(this.basicDimension/this.puzzleLevel);
@@ -59,6 +69,9 @@ export class NgSlidePuzzleComponent implements OnInit {
       x:x,
       y:y
     };
+  }
+  public arrangePieces(){
+    this.puzzlePieces=JSON.parse(this.jsonCorrectPositions);
   }
   public shufflePieces(){
     var pieceSetter:PuzzlePiece[] = JSON.parse(JSON.stringify(this.puzzlePieces));
