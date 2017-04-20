@@ -12,10 +12,7 @@ export class NgSlidePuzzleComponent implements OnInit {
   
   @Input() imgUrl:string;
   @Input() puzzleLevel:number;
-  parentPosition = {
-    x:0,
-    y:0,
-  };
+
   puzzlePieces:PuzzlePiece[] = [];
   basicDimension:number;
 
@@ -28,7 +25,7 @@ export class NgSlidePuzzleComponent implements OnInit {
     this.assignPieces();
     this.shufflePieces();
     console.log('pieces',this.puzzlePieces);
-    console.log('puzzleBoard',this.elem.nativeElement.querySelector('#puzzleBoard'));
+    console.log('puzzleBoard',this.getBoardPossition());
   }
 
   private assignPieces(){
@@ -61,7 +58,12 @@ export class NgSlidePuzzleComponent implements OnInit {
       this.puzzlePieces[ctr].current_y = removedPiece.correct_y;
     }
   }
-
+  getBoardPossition(){
+    return {
+      x:this.elem.nativeElement.querySelector('#puzzleBoard').offsetLeft,
+      y:this.elem.nativeElement.querySelector('#puzzleBoard').offsetTop
+    };
+  }
   randomIntFromInterval(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
   }

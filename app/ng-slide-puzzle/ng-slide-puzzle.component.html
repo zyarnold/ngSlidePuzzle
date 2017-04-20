@@ -4,16 +4,19 @@
 </p>
 
   <img id="puzzleImage" [src]="imgUrl" [style.display]="'none'" />
-  <div id="puzzleBoard" [style.display]="'block'" [style.width]="basicDimension+'px'" [style.height]="basicDimension+'px'" [style.background-color]="'black'" >
+  <div id="puzzleBoard" [style.display]="'block'" [style.position]="'relative'" [style.width]="basicDimension+'px'" [style.height]="basicDimension+'px'" [style.background-color]="'black'" >
     <button *ngFor="let piece of puzzlePieces;let i = index;"
-            [style.position]="'relative'"
+            [style.position]="'absolute'"
             [style.cursor]="'pointer'" 
             [style.background-color]="'white'" 
             [style.position.display]="'inline-block'"
+            [style.background-position-x]="-getRelativePosition(i,piece).x+'px'"
+            [style.background-position-y]="-getRelativePosition(i,piece).y+'px'"
             [style.left] = "getRelativePosition(i,piece).x+'px'"
             [style.top] = "getRelativePosition(i,piece).y+'px'"
             [style.width]="basicDimension/puzzleLevel+'px'" 
-            [style.height]="basicDimension/puzzleLevel+'px'"  >
+            [style.height]="basicDimension/puzzleLevel+'px'"
+            [style.background-image]="'url('+imgUrl+')'"  >
       {{i}}
     </button>
   </div>
