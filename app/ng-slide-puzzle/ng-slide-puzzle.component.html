@@ -10,13 +10,14 @@
             [style.cursor]="'pointer'" 
             [style.background-color]="'white'" 
             [style.position.display]="'inline-block'"
-            [style.background-position-x]="-getRelativePosition(i,piece).x+'px'"
-            [style.background-position-y]="-getRelativePosition(i,piece).y+'px'"
-            [style.left] = "getRelativePosition(i,piece).x+'px'"
-            [style.top] = "getRelativePosition(i,piece).y+'px'"
+            [style.background-position-x]="-getRelativePosition(i,piece.correct_x,piece.correct_y).x+'px'"
+            [style.background-position-y]="-getRelativePosition(i,piece.correct_x,piece.correct_y).y+'px'"
+            [style.left] = "getRelativePosition(i,piece.current_x,piece.current_y).x+'px'"
+            [style.top] = "getRelativePosition(i,piece.current_x,piece.current_y).y+'px'"
             [style.width]="basicDimension/puzzleLevel+'px'" 
             [style.height]="basicDimension/puzzleLevel+'px'"
-            [style.background-image]="'url('+imgUrl+')'"  >
+            [style.background-image]="i==puzzlePieces.length-1?  'none':('url('+imgUrl+')')"
+            (click)="switchWithBlank(piece)"  >
       {{i}}
     </button>
   </div>

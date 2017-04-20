@@ -39,10 +39,22 @@ export class NgSlidePuzzleComponent implements OnInit {
     }
     this.puzzlePieces[(this.puzzleLevel*this.puzzleLevel)-1].isBlankPiece = true;
   }
-  getRelativePosition(index:number, piece:PuzzlePiece){
-
-    var x = piece.correct_x*(this.basicDimension/this.puzzleLevel);
-    var y = piece.correct_y*(this.basicDimension/this.puzzleLevel);
+  switchWithBlank(clickedPiece:PuzzlePiece){
+    var blankPiece:PuzzlePiece = this.puzzlePieces[this.puzzlePieces.length-1];
+    var sameX = clickedPiece.current_x == blankPiece.current_x && (clickedPiece.current_y+1==blankPiece.current_y || clickedPiece.current_y-1==blankPiece.current_y);
+    var sameY = clickedPiece.current_y == blankPiece.current_y && (clickedPiece.current_x+1==blankPiece.current_x || clickedPiece.current_x-1==blankPiece.current_x);
+    if(sameX || sameY){
+      var blankX = blankPiece.current_x;
+      var blankY = blankPiece.current_y;
+      blankPiece.current_x = clickedPiece.current_x;
+      blankPiece.current_y = clickedPiece.current_y;
+      clickedPiece.current_x = blankX;
+      clickedPiece.current_y = blankY;
+    }
+  }
+  getRelativePosition(index:number, _x:number, _y:number){
+    var x = _x*(this.basicDimension/this.puzzleLevel);
+    var y = _y*(this.basicDimension/this.puzzleLevel);
     return{
       x:x,
       y:y
