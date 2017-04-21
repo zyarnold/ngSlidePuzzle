@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ElementRef } from '@angular/core';
+import { EventEmitter,Output,Component, OnInit,Input, ElementRef } from '@angular/core';
 import { PuzzlePiece } from './puzzle-piece';
 
 @Component({
@@ -10,11 +10,13 @@ export class NgSlidePuzzleComponent implements OnInit {
 
   constructor(public elem:ElementRef) { }
   
+  @Output() onPuzzleMove:EventEmitter<any>;
   @Input() imgUrl:string;
   @Input() puzzleLevel:number;
+  @Input() basicDimension:number;
 
   puzzlePieces:PuzzlePiece[] = [];
-  basicDimension:number;
+  
   jsonCorrectPositions:string;
 
   ngOnInit() {
@@ -54,12 +56,8 @@ export class NgSlidePuzzleComponent implements OnInit {
       blankPiece.current_y = clickedPiece.current_y;
       clickedPiece.current_x = blankX;
       clickedPiece.current_y = blankY;
-    }
-    if(this.jsonCorrectPositions==JSON.stringify(this.puzzlePieces)){
-      console.log('timeout1');
-      window.setTimeout(function(){
-        alert('win');
-      },250);
+      var isComplete:boolean = this.jsonCorrectPositions==JSON.stringify(this.puzzlePieces);
+      this.onPuzzleMove.emit(isComplete);
     }
   }
   getRelativePosition(index:number, _x:number, _y:number){
